@@ -5,7 +5,8 @@ from music21 import *
 
 SETTINGS = {
     'VOLUME': 50,
-    'CHORD_DURATION': 1.0
+    'CHORD_DURATION': 1.0,
+    'OCTAVE_OFFSET': 4
 }
 
 '''
@@ -31,8 +32,8 @@ def get_midi_tone(midi_file: stream.Stream) -> tuple[str]:
 Set volume for the accompaniment.
 Count average between the notes and takes away some points.
 '''
-def set_volume(midi: stream.Stream, adjust: int):
-    SETTINGS['VOLUME'] = np.average(np.array([_.volume.velocity for _ in midi.recurse() if type(_) is note.Note])) - adjust
+def set_settings(midi: stream.Stream, vadjust: int):
+    SETTINGS['VOLUME'] = np.average(np.array([_.volume.velocity for _ in midi.recurse() if type(_) is note.Note])) - vadjust
 
 '''
 Simply make random chord in the range of two octaves.
@@ -60,7 +61,7 @@ Generate the chord sequence using the random chords generator.
 def make_chord_seq(count_: int) -> list[chord.Chord]:
     ret: list[chord.Chord] = []
     for _ in range(0, count_):
-        ret.append(make_random_chord(SETTINGS['VOLUME'], 4, 1.0))
+        ret.append(make_random_chord(SETTINGS['VOLUME'], SETTINGS['OCTAVE_OFFSET'], SETTINGS['CHORD_DURATION']))
     return ret
 
 '''
@@ -68,6 +69,7 @@ Make population melody + chords.
 '''
 def make_chord_track(chords: list[chord.Chord]) -> stream.Stream:
     cstream = stream.Stream()
+    cstream.append(instrument.Piano())
     for _ in chords:
         cstream.append(_)
     return cstream
@@ -80,15 +82,22 @@ This information allows to count the chords number.
 def get_bars_count(song: stream.Stream) -> int:
     return int(np.sum(np.array([1 for _ in song.recurse() if type(_) is stream.Measure])))
 
+
+def chord_fitness(song: stream.Stream, chord: chord.Chord) -> float:
+    
+
+def fitness() -> float:
+    pass
+
+
 def save_midi(song: stream.Stream, fname='output.mid'):
     song.write('midi', fp=fname)
 
 def main(infile: str, outfile: str):
     mstream = read_midi(infile)
-    set_volume(mstream, adjust = 15)
+    set_settings(mstream, vadjust=5)
     bars = get_bars_count(mstream)
-    track = make_chord_track(make_chord_seq(bars * int(bars / SETTINGS['CHORD_DURATION'])))
-    track.instrument = instrument.Piano()
+    track = make_chord_track(make_chord_seq(bars * int(4 / SETTINGS['CHORD_DURATION'])))
     mstream.append(track)
     save_midi(mstream, outfile)
 
