@@ -5,7 +5,7 @@ from music21 import *
 
 SETTINGS = {
     'VOLUME': 50,
-    'CHORD_DURATION': 2.0,
+    'CHORD_DURATION': 1.0,
     'OCTAVE_OFFSET': 3,
     'TONE': 'C',
     'NOTES': [],
