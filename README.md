@@ -53,8 +53,8 @@ There is two parameters: f and k. k is the simple coefficient. f is the fitness 
 1. Is chord is consonant? → plus linear value;
 2. Does it contains gaps less than 2 half-tones or more than 12 half-tones? → leads to zero points;
 3. How many notes matched notes from the key? → plus quadratic value if exists, 0 if not;
-4. Check if the gene matches the best optioned suggested chord for this set of notes. → cubic value if fully matched, $`k^{2.5}`$ if two values are same, linear if one is matched;
-5. Last check if the chord is matched fully with at least one of the key chords. → $`\log{k^2}`$
+4. Check if the gene matches the best optioned suggested chord for this set of notes. → cubic value if fully matched, k^{2.5} if two values are same, linear if one is matched;
+5. Last check if the chord is matched fully with at least one of the key chords. → log{k^2}
 
 ## Detail explanation of the crossover function
 
