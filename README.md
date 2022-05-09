@@ -82,7 +82,5 @@ There is the turning point number where the fitness score is good enough to be s
 1. Make sure you use python version 3.9.12
 2. Create virtual environment by the following command`python3 -m venv env`
 3. Run `source env/bin/activate`
-4. Install packages: `pip install numpy==1.22.3` and `pip install music21==7.3.3`
+4. Install packages: `pip install requirements.txt`
 5. Run program `./main.py <input_name.mid> <output_name.mid>`
-
-For the fully dependencies check the link: [https://github.com/aalexren/iu-ipai](https://github.com/aalexren/iu-ipai)
